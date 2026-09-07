@@ -13,6 +13,14 @@
 - 🔍 按路径、环境侧别或下载地址筛选索引文件。
 - 🌐 支持简体中文、繁体中文和英文。
 
+## 🖼️ 界面预览
+
+| 📦 概览 | 🗂️ 索引文件 |
+| --- | --- |
+| ![概览](docs/images/preview/概览-overview.png) | ![索引文件](docs/images/preview/索引文件-indexed-files.png) |
+| 🔢 文件数 | 🗃️ 归档内容 |
+| ![文件数](docs/images/preview/文件数-file-count.png) | ![归档内容](docs/images/preview/归档内容-archive.png) |
+
 ## 🚀 使用
 
 💡 环境要求：Python 3.11 或更高版本，以及 [uv](https://docs.astral.sh/uv/)。

@@ -13,6 +13,14 @@
 - 🔍 Filter indexed files by path, environment side, or download URL.
 - 🌐 Support Simplified Chinese, Traditional Chinese, and English.
 
+## 🖼️ Preview
+
+| 📦 Overview | 🗂️ Indexed Files |
+| --- | --- |
+| ![Overview](docs/images/preview/概览-overview.png) | ![Indexed files](docs/images/preview/索引文件-indexed-files.png) |
+| 🔢 File Count | 🗃️ Archive Contents |
+| ![File count](docs/images/preview/文件数-file-count.png) | ![Archive contents](docs/images/preview/归档内容-archive.png) |
+
 ## 🚀 Usage
 
 💡 Requirement: Python 3.11 or newer and [uv](https://docs.astral.sh/uv/).
