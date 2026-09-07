@@ -23,9 +23,9 @@
 
 ![索引檔案](docs/images/preview/索引文件-indexed-files.png)
 
-### 🔢 檔案數
+### 🌳 檔案樹
 
-![檔案數](docs/images/preview/文件数-file-count.png)
+![檔案樹](docs/images/preview/文件树-file-tree.png)
 
 ### 🗃️ 封存內容
 

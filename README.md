@@ -23,9 +23,9 @@
 
 ![索引文件](docs/images/preview/索引文件-indexed-files.png)
 
-### 🔢 文件数
+### 🌳 文件树
 
-![文件数](docs/images/preview/文件数-file-count.png)
+![文件树](docs/images/preview/文件树-file-tree.png)
 
 ### 🗃️ 归档内容
 

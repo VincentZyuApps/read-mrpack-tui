@@ -23,9 +23,9 @@
 
 ![Indexed files](docs/images/preview/索引文件-indexed-files.png)
 
-### 🔢 File Count
+### 🌳 File Tree
 
-![File count](docs/images/preview/文件数-file-count.png)
+![File tree](docs/images/preview/文件树-file-tree.png)
 
 ### 🗃️ Archive Contents
 
