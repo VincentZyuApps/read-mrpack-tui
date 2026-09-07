@@ -1,5 +1,8 @@
 # 🌳 MRPACK 終端檢查器
 
+[![PyPI 包版本 / Package Version](https://img.shields.io/pypi/v/read-mrpack-tui?style=for-the-badge&logo=pypi&logoColor=white&label=Package%20Version&labelColor=3775A9&color=FFD43B)](https://pypi.org/project/read-mrpack-tui/)
+[![支援的 Python 版本 / Supported Python Versions](https://img.shields.io/pypi/pyversions/read-mrpack-tui?style=for-the-badge&logo=python&logoColor=white&labelColor=3775A9&color=FFD43B)](https://pypi.org/project/read-mrpack-tui/)
+
 > 一個基於 Textual 的終端介面，用於讀取及瀏覽 Modrinth `.mrpack` 整合包。
 
 > **[📖 English](README.en-us.md)**

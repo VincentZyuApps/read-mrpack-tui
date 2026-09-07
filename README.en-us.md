@@ -1,5 +1,8 @@
 # 🌳 MRPACK TUI Inspector
 
+[![PyPI 包版本 / Package Version](https://img.shields.io/pypi/v/read-mrpack-tui?style=for-the-badge&logo=pypi&logoColor=white&label=Package%20Version&labelColor=3775A9&color=FFD43B)](https://pypi.org/project/read-mrpack-tui/)
+[![支持的 Python 版本 / Supported Python Versions](https://img.shields.io/pypi/pyversions/read-mrpack-tui?style=for-the-badge&logo=python&logoColor=white&labelColor=3775A9&color=FFD43B)](https://pypi.org/project/read-mrpack-tui/)
+
 > A Textual terminal interface for reading and browsing Modrinth `.mrpack` modpacks.
 
 > **[📖 English](README.en-us.md)**
