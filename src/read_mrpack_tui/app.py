@@ -18,6 +18,7 @@ from textual.binding import Binding
 from textual.containers import Horizontal
 from textual.widgets import Button, DataTable, Footer, Header, Input, Static, TabbedContent, TabPane, Tree
 
+from . import __version__
 from .i18n import DEFAULT_LOCALE, SUPPORTED_LOCALES, Translator, load_translator
 
 
@@ -106,19 +107,30 @@ class MrpackApp(App[None]):
     """Textual UI for browsing the contents of a Modrinth pack."""
 
     CSS = """
-    Screen { background: #10141b; color: #d8e1eb; }
-    #path_bar { height: auto; padding: 1 2; background: #18212c; }
+    Screen { background: #101912; color: #e0eee4; }
+    Header { background: #123d27; color: #f4fff7; }
+    #path_bar { height: auto; padding: 1 2; background: #15271c; }
     #pack_path { width: 1fr; margin-right: 1; }
-    #status { height: 1; padding: 0 2; color: #9fb3c8; background: #18212c; }
+    #app_version { width: auto; min-width: 8; padding: 1 0 1 1; color: #84dca2; text-style: bold; }
+    #status { height: 1; padding: 0 2; color: #afc8b7; background: #15271c; }
     #status.error { color: #ffb4a9; }
     TabbedContent { height: 1fr; margin: 1 2; }
     TabPane { padding: 1 0; }
-    #summary { height: auto; padding: 1 2; margin-bottom: 1; background: #18212c; border: round #3c536b; }
-    #dependencies, #files, #archive, #file_tree { height: 1fr; border: round #3c536b; }
+    #summary { height: auto; padding: 1 2; margin-bottom: 1; background: #15271c; border: round #356345; }
+    #dependencies, #files, #archive, #file_tree { height: 1fr; border: round #356345; }
     #file_tree { padding: 1; }
     #filter_bar { height: auto; margin-bottom: 1; }
     #file_filter { width: 1fr; }
-    .section_title { padding: 0 1; color: #7fdbca; }
+    .section_title { padding: 0 1; color: #1bd96a; text-style: bold; }
+    Button { background: #1b3424; color: #dff7e6; border: tall #356345; }
+    Button:hover { background: #244b31; border: tall #1bd96a; }
+    Button.-primary { background: #1bd96a; color: #062611; text-style: bold; border: tall #55e38b; }
+    Button.-primary:hover { background: #55e38b; color: #062611; }
+    Input { border: tall #356345; }
+    Input:focus { border: tall #1bd96a; }
+    ContentTab.-active { color: #1bd96a; text-style: bold; }
+    Tabs { color: #1bd96a; }
+    DataTable > .datatable--cursor { background: #1f4c30; color: #f4fff7; }
     """
 
     def __init__(self, translator: Translator, initial_path: str | None = None) -> None:
@@ -146,6 +158,7 @@ class MrpackApp(App[None]):
         with Horizontal(id="path_bar"):
             yield Input(self.initial_path, placeholder=self.ui("input.pack_path"), id="pack_path")
             yield Button(self.ui("actions.load"), id="load", variant="primary")
+            yield Static(f"v{__version__}", id="app_version")
         yield Static(self.ui("status.initial"), id="status")
         with TabbedContent(initial="overview"):
             with TabPane(self.ui("tabs.overview"), id="overview"):

@@ -1,3 +1,3 @@
 """Interactive reader for Modrinth MRPACK archives."""
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
