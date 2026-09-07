@@ -36,19 +36,19 @@
 💡 環境需求：Python 3.11 或更新版本，以及 [uv](https://docs.astral.sh/uv/)。
 
 ```powershell
-uvx read-mrpack-tui
+uvx --refresh read-mrpack-tui
 ```
 
 📂 直接傳入整合包絕對路徑：
 
 ```powershell
-uvx read-mrpack-tui "D:\Minecraft\modpacks\example.mrpack"
+uvx --refresh read-mrpack-tui "D:\Minecraft\modpacks\example.mrpack"
 ```
 
 🌐 指定介面語言：
 
 ```powershell
-uvx read-mrpack-tui --lang zh-tw "D:\Minecraft\modpacks\example.mrpack"
+uvx --refresh read-mrpack-tui --lang zh-tw "D:\Minecraft\modpacks\example.mrpack"
 ```
 
 ## 🛠️ 開發

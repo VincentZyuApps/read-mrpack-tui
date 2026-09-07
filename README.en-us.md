@@ -36,19 +36,19 @@
 💡 Requirement: Python 3.11 or newer and [uv](https://docs.astral.sh/uv/).
 
 ```powershell
-uvx read-mrpack-tui
+uvx --refresh read-mrpack-tui
 ```
 
 📂 Pass an absolute modpack path directly:
 
 ```powershell
-uvx read-mrpack-tui "D:\Minecraft\modpacks\example.mrpack"
+uvx --refresh read-mrpack-tui "D:\Minecraft\modpacks\example.mrpack"
 ```
 
 🌐 Select a display language:
 
 ```powershell
-uvx read-mrpack-tui --lang en-us "D:\Minecraft\modpacks\example.mrpack"
+uvx --refresh read-mrpack-tui --lang en-us "D:\Minecraft\modpacks\example.mrpack"
 ```
 
 ## 🛠️ Development
