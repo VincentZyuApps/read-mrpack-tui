@@ -28,11 +28,15 @@ class TreeUiTests(unittest.IsolatedAsyncioTestCase):
                 tree = app.query_one("#file_tree", Tree)
                 self.assertIs(app.focused, tree)
                 self.assertEqual(len(app._tree_match_nodes), 2)
-                first_index = app._tree_match_index
+                self.assertEqual(app._tree_match_index, 0)
+                await pilot.press("down")
+                self.assertEqual(app._tree_match_index, 1)
+                await pilot.press("up")
+                self.assertEqual(app._tree_match_index, 0)
                 await pilot.press("s")
-                self.assertNotEqual(first_index, app._tree_match_index)
+                self.assertEqual(app._tree_match_index, 1)
                 await pilot.press("w")
-                self.assertEqual(first_index, app._tree_match_index)
+                self.assertEqual(app._tree_match_index, 0)
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from textual import events, work
+from textual import work
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal
@@ -56,6 +56,21 @@ class PackReadError(ValueError):
         super().__init__(key)
         self.key = key
         self.values = values
+
+
+class SearchTree(Tree[None]):
+    """A Tree whose navigation keys cycle through active search matches."""
+
+    BINDINGS = [
+        Binding("up,w", "previous_search_match", show=False),
+        Binding("down,s", "next_search_match", show=False),
+    ]
+
+    def action_previous_search_match(self) -> None:
+        self.app._move_tree_match(-1)  # type: ignore[attr-defined]
+
+    def action_next_search_match(self) -> None:
+        self.app._move_tree_match(1)  # type: ignore[attr-defined]
 
 
 @dataclass(slots=True)
@@ -172,18 +187,18 @@ class MrpackApp(App[None]):
                 yield Static(self.ui("sections.dependencies"), classes="section_title")
                 yield DataTable(id="dependencies", cursor_type="row", zebra_stripes=True)
             with TabPane(self.ui("tabs.indexed_files"), id="indexed_files"):
-                with Horizontal(id="tree_filter_bar"):
+                with Horizontal(id="filter_bar"):
                     yield Input(placeholder=self.ui("input.file_filter"), id="file_filter")
                     yield Button(self.ui("actions.clear"), id="clear_filter")
                 yield DataTable(id="files", cursor_type="row", zebra_stripes=True)
             with TabPane(self.ui("tabs.archive"), id="archive_tab"):
                 yield DataTable(id="archive", cursor_type="row", zebra_stripes=True)
             with TabPane(self.ui("tabs.file_tree"), id="file_tree_tab"):
-                with Horizontal(id="filter_bar"):
+                with Horizontal(id="tree_filter_bar"):
                     yield Input(placeholder=self.ui("input.tree_filter"), id="tree_filter")
                     yield Button(self.ui("actions.clear"), id="clear_tree_filter")
                     yield Static("", id="tree_search_status")
-                yield Tree(self.ui("tree.root"), id="file_tree")
+                yield SearchTree(self.ui("tree.root"), id="file_tree")
         yield Footer()
 
     def on_mount(self) -> None:
@@ -401,19 +416,6 @@ class MrpackApp(App[None]):
             return
         self._tree_match_index = (self._tree_match_index + offset) % len(self._tree_match_nodes)
         self._focus_tree_match()
-
-    def on_key(self, event: events.Key) -> None:
-        if self.focused is not self.query_one("#file_tree", Tree):
-            return
-        if event.key in {"up", "w"}:
-            self._move_tree_match(-1)
-        elif event.key in {"down", "s"}:
-            self._move_tree_match(1)
-        else:
-            return
-        event.stop()
-        event.prevent_default()
-
 
 def parse_arguments(argv: list[str]) -> tuple[argparse.Namespace, Translator]:
     bootstrap = argparse.ArgumentParser(add_help=False)
