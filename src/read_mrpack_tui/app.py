@@ -409,7 +409,8 @@ class MrpackApp(App[None]):
             node = nodes.get(path_key)
             if node and path_key in folder_keys:
                 node.expand()
-        self._focus_tree_match()
+        # TreeNode line numbers are assigned during the next screen refresh.
+        self.call_after_refresh(self._focus_tree_match)
 
     def _focus_tree_match(self) -> None:
         if not self._tree_match_nodes:

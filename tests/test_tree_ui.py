@@ -5,7 +5,7 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from textual.widgets import Button, Input, Tree
+from textual.widgets import Button, Input, TabbedContent, Tree
 
 from read_mrpack_tui.app import MrpackApp, read_pack
 from read_mrpack_tui.i18n import load_translator
@@ -22,6 +22,8 @@ class TreeUiTests(unittest.IsolatedAsyncioTestCase):
 
             app = MrpackApp(load_translator("en-us"))
             async with app.run_test() as pilot:
+                app.query_one(TabbedContent).active = "file_tree_tab"
+                await pilot.pause()
                 app.show_pack(read_pack(str(path)))
                 app.query_one("#tree_filter", Input).value = "lantern"
                 await pilot.pause(0.8)
@@ -29,10 +31,15 @@ class TreeUiTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIs(app.focused, tree)
                 self.assertEqual(len(app._tree_match_nodes), 2)
                 self.assertEqual(app._tree_match_index, 0)
+                first_label = str(tree.cursor_node.label)
+                self.assertIn("lantern", first_label)
+                self.assertNotIn("Archive files", first_label)
                 await pilot.press("down")
                 self.assertEqual(app._tree_match_index, 1)
+                self.assertNotEqual(first_label, str(tree.cursor_node.label))
                 await pilot.press("up")
                 self.assertEqual(app._tree_match_index, 0)
+                self.assertEqual(first_label, str(tree.cursor_node.label))
                 await pilot.press("s")
                 self.assertEqual(app._tree_match_index, 1)
                 await pilot.press("w")
