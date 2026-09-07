@@ -16,6 +16,7 @@ actions:
 input:
   pack_path: 輸入 .mrpack 檔案的絕對路徑
   file_filter: 依路徑、環境側別或下載網址篩選
+  tree_filter: 搜尋檔案名稱、資料夾或文字內容
 status:
   initial: 輸入 MRPACK 路徑以檢視其中繼資料。
   empty_path: 請輸入 .mrpack 檔案的絕對路徑。
@@ -52,6 +53,9 @@ archive:
   root: （根目錄）
 tree:
   root: 封存檔案
+  no_matches: 沒有相符的檔案或資料夾
+  search_matches: "{count} 個相符項目"
+  search_limited: "文字掃描受限 · {count} 個相符項目"
 errors:
   file_not_found: "找不到檔案：{path}"
   not_mrpack: 請選擇副檔名為 .mrpack 的檔案。

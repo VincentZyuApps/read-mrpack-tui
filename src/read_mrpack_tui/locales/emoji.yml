@@ -16,6 +16,7 @@ actions:
 input:
   pack_path: "📍"
   file_filter: "🔍"
+  tree_filter: "🔎"
 status:
   initial: "💡"
   empty_path: "⚠️"
@@ -52,6 +53,9 @@ archive:
   root: "📁"
 tree:
   root: "🌳"
+  no_matches: "🔎"
+  search_matches: "🔎"
+  search_limited: "⚠️"
 errors:
   file_not_found: "❌"
   not_mrpack: "❌"

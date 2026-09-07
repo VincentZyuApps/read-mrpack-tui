@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from textual import work
+from textual import events, work
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal
@@ -20,6 +20,7 @@ from textual.widgets import Button, DataTable, Footer, Header, Input, Static, Ta
 
 from . import __version__
 from .i18n import DEFAULT_LOCALE, SUPPORTED_LOCALES, Translator, load_translator
+from .tree_search import TextSearchCache, TreeSearchResult, search_tree
 
 
 def human_size(size: int) -> str:
@@ -62,6 +63,7 @@ class PackData:
     path: Path
     index: dict[str, Any]
     archive_entries: list[zipfile.ZipInfo]
+    text_search_cache: TextSearchCache | None = None
 
     @property
     def files(self) -> list[dict[str, Any]]:
@@ -118,9 +120,10 @@ class MrpackApp(App[None]):
     TabPane { padding: 1 0; }
     #summary { height: auto; padding: 1 2; margin-bottom: 1; background: #15271c; border: round #356345; }
     #dependencies, #files, #archive, #file_tree { height: 1fr; border: round #356345; }
-    #file_tree { padding: 1; }
-    #filter_bar { height: auto; margin-bottom: 1; }
-    #file_filter { width: 1fr; }
+    #file_tree { height: 1fr; padding: 1; }
+    #filter_bar, #tree_filter_bar { height: auto; margin-bottom: 1; }
+    #file_filter, #tree_filter { width: 1fr; }
+    #tree_search_status { width: auto; color: #84dca2; padding: 1 0 0 1; }
     .section_title { padding: 0 1; color: #1bd96a; text-style: bold; }
     Button { background: #1b3424; color: #dff7e6; border: tall #356345; }
     Button:hover { background: #244b31; border: tall #1bd96a; }
@@ -138,6 +141,9 @@ class MrpackApp(App[None]):
         self.translator = translator
         self.initial_path = initial_path or ""
         self.pack: PackData | None = None
+        self._tree_search_timer: Any | None = None
+        self._tree_match_nodes: list[Any] = []
+        self._tree_match_index = 0
         self.title = self.ui("app.title")
         self.sub_title = self.ui("app.subtitle")
         self.BINDINGS = [
@@ -166,13 +172,17 @@ class MrpackApp(App[None]):
                 yield Static(self.ui("sections.dependencies"), classes="section_title")
                 yield DataTable(id="dependencies", cursor_type="row", zebra_stripes=True)
             with TabPane(self.ui("tabs.indexed_files"), id="indexed_files"):
-                with Horizontal(id="filter_bar"):
+                with Horizontal(id="tree_filter_bar"):
                     yield Input(placeholder=self.ui("input.file_filter"), id="file_filter")
                     yield Button(self.ui("actions.clear"), id="clear_filter")
                 yield DataTable(id="files", cursor_type="row", zebra_stripes=True)
             with TabPane(self.ui("tabs.archive"), id="archive_tab"):
                 yield DataTable(id="archive", cursor_type="row", zebra_stripes=True)
             with TabPane(self.ui("tabs.file_tree"), id="file_tree_tab"):
+                with Horizontal(id="filter_bar"):
+                    yield Input(placeholder=self.ui("input.tree_filter"), id="tree_filter")
+                    yield Button(self.ui("actions.clear"), id="clear_tree_filter")
+                    yield Static("", id="tree_search_status")
                 yield Tree(self.ui("tree.root"), id="file_tree")
         yield Footer()
 
@@ -206,6 +216,8 @@ class MrpackApp(App[None]):
             self.action_load_pack()
         elif event.button.id == "clear_filter":
             self.query_one("#file_filter", Input).value = ""
+        elif event.button.id == "clear_tree_filter":
+            self.query_one("#tree_filter", Input).value = ""
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
         if event.input.id == "pack_path":
@@ -214,6 +226,12 @@ class MrpackApp(App[None]):
     def on_input_changed(self, event: Input.Changed) -> None:
         if event.input.id == "file_filter":
             self.populate_files(event.value)
+        elif event.input.id == "tree_filter":
+            if self._tree_search_timer:
+                self._tree_search_timer.stop()
+            self._tree_search_timer = self.set_timer(
+                0.35, lambda value=event.value: self.search_file_tree(value)
+            )
 
     @work(thread=True, exclusive=True)
     def load_path(self, value: str) -> None:
@@ -235,6 +253,8 @@ class MrpackApp(App[None]):
         self.populate_overview()
         self.populate_files(self.query_one("#file_filter", Input).value)
         self.populate_archive()
+        self.query_one("#tree_filter", Input).value = ""
+        self.query_one("#tree_search_status", Static).update("")
         self.populate_file_tree()
 
     def set_status(self, message: str, error: bool = False) -> None:
@@ -254,7 +274,7 @@ class MrpackApp(App[None]):
         groups = self.pack.groups
         self.query_one("#summary", Static).update(
             "\n".join((
-                f"[bold #7fdbca]{self.ui('summary.title', name=self.pack.path.name)}[/]",
+                f"[bold #1bd96a]{self.ui('summary.title', name=self.pack.path.name)}[/]",
                 self.ui("summary.metadata", format_version=self.pack.index.get("formatVersion", "?"), game=self.pack.index.get("game", "?"), archive_size=human_size(self.pack.path.stat().st_size)),
                 self.ui("summary.files", total=len(self.pack.files), both=groups["both"], client_only=groups["client_only"], server_only=groups["server_only"]),
             ))
@@ -288,12 +308,35 @@ class MrpackApp(App[None]):
         for root, count in self.pack.archive_roots.most_common():
             table.add_row(root or self.ui("archive.root"), str(count), human_size(sizes[root]))
 
-    def populate_file_tree(self) -> None:
+    @work(thread=True, group="tree-search", exclusive=True)
+    def search_file_tree(self, value: str) -> None:
+        pack = self.pack
+        if not pack:
+            return
+        result, cache = search_tree(pack.path, pack.archive_entries, value, pack.text_search_cache)
+        pack.text_search_cache = cache
+        self.call_from_thread(self.show_tree_search, pack, result)
+
+    def show_tree_search(self, pack: PackData, result: TreeSearchResult) -> None:
+        if self.pack is not pack:
+            return
+        status = self.query_one("#tree_search_status", Static)
+        if not result.query:
+            status.update("")
+        elif result.limited:
+            status.update(self.ui("tree.search_limited", count=len(result.matches)))
+        else:
+            status.update(self.ui("tree.search_matches", count=len(result.matches)))
+        self.populate_file_tree(result)
+
+    def populate_file_tree(self, result: TreeSearchResult | None = None) -> None:
         """Populate a compact, lazily expanded view of every ZIP archive path."""
         tree = self.query_one("#file_tree", Tree)
         tree.clear()
         tree.root.set_label(self.ui("tree.root"))
         tree.root.expand()
+        self._tree_match_nodes = []
+        self._tree_match_index = 0
         if not self.pack:
             return
 
@@ -310,15 +353,66 @@ class MrpackApp(App[None]):
             for info in self.pack.archive_entries
             if info.is_dir() and info.filename.rstrip("/")
         )
+        match_sources = {match.path: match.sources for match in result.matches} if result else {}
+        visible_paths = result.visible_paths if result else None
         for path in paths:
             parts = tuple(part for part in path.split("/") if part)
             for index, part in enumerate(parts):
                 key = parts[: index + 1]
+                if visible_paths is not None and key not in visible_paths:
+                    continue
                 if key in nodes:
                     continue
                 parent = nodes[key[:-1]]
                 is_folder = key in folder_keys
-                nodes[key] = parent.add(f"{'📁' if is_folder else '📄'} {part}", allow_expand=is_folder)
+                marker = "🔎 " if key in match_sources else ""
+                nodes[key] = parent.add(
+                    f"{'📁' if is_folder else '📄'} {marker}{part}", allow_expand=is_folder
+                )
+
+        if result and result.query and not result.matches:
+            tree.root.add(self.ui("tree.no_matches"))
+            return
+        if not result or not result.matches:
+            return
+
+        self._tree_match_nodes = [nodes[match.path] for match in result.matches if match.path in nodes]
+        if not self._tree_match_nodes:
+            return
+        first_path = result.matches[0].path
+        for index in range(1, len(first_path) + 1):
+            path_key = first_path[:index]
+            node = nodes.get(path_key)
+            if node and path_key in folder_keys:
+                node.expand()
+        self._focus_tree_match()
+
+    def _focus_tree_match(self) -> None:
+        if not self._tree_match_nodes:
+            return
+        tree = self.query_one("#file_tree", Tree)
+        node = self._tree_match_nodes[self._tree_match_index]
+        tree.move_cursor(node, animate=False)
+        tree.scroll_to_node(node, animate=False)
+        tree.focus()
+
+    def _move_tree_match(self, offset: int) -> None:
+        if not self._tree_match_nodes:
+            return
+        self._tree_match_index = (self._tree_match_index + offset) % len(self._tree_match_nodes)
+        self._focus_tree_match()
+
+    def on_key(self, event: events.Key) -> None:
+        if self.focused is not self.query_one("#file_tree", Tree):
+            return
+        if event.key in {"up", "w"}:
+            self._move_tree_match(-1)
+        elif event.key in {"down", "s"}:
+            self._move_tree_match(1)
+        else:
+            return
+        event.stop()
+        event.prevent_default()
 
 
 def parse_arguments(argv: list[str]) -> tuple[argparse.Namespace, Translator]:

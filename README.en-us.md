@@ -13,6 +13,7 @@
 
 - 📦 View pack metadata, dependencies, Modrinth indexed files, and archive root statistics.
 - 🌳 Browse the complete ZIP file tree, with directories collapsed by default for large modpacks.
+- 🔎 Search the file tree by file name, folder name, or bounded UTF-8 text content, then navigate matches with arrow keys or W/S.
 - 🔍 Filter indexed files by path, environment side, or download URL.
 - 🌐 Support Simplified Chinese, Traditional Chinese, and English.
 

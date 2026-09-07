@@ -16,6 +16,7 @@ actions:
 input:
   pack_path: 输入 .mrpack 文件的绝对路径
   file_filter: 按路径、环境侧别或下载地址筛选
+  tree_filter: 搜索文件名、文件夹或文本内容
 status:
   initial: 输入 MRPACK 路径以查看其元数据。
   empty_path: 请输入 .mrpack 文件的绝对路径。
@@ -52,6 +53,9 @@ archive:
   root: （根目录）
 tree:
   root: 归档文件
+  no_matches: 没有匹配的文件或文件夹
+  search_matches: "{count} 个匹配项"
+  search_limited: "文本扫描受限 · {count} 个匹配项"
 errors:
   file_not_found: "找不到文件：{path}"
   not_mrpack: 请选择扩展名为 .mrpack 的文件。

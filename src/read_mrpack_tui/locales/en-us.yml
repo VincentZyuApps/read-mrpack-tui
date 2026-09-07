@@ -16,6 +16,7 @@ actions:
 input:
   pack_path: Absolute path to a .mrpack file
   file_filter: Filter by path, side, or download URL
+  tree_filter: Search file names, folders, or text contents
 status:
   initial: Enter an MRPACK path to inspect its metadata.
   empty_path: Enter an absolute .mrpack path.
@@ -52,6 +53,9 @@ archive:
   root: (root)
 tree:
   root: Archive files
+  no_matches: No matching files or folders
+  search_matches: "{count} matches"
+  search_limited: "Text scan limited · {count} matches"
 errors:
   file_not_found: "File not found: {path}"
   not_mrpack: Select a file with the .mrpack extension.
