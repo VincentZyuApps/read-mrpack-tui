@@ -15,11 +15,21 @@
 
 ## 🖼️ 界面预览
 
-| 📦 概览 | 🗂️ 索引文件 |
-| --- | --- |
-| ![概览](docs/images/preview/概览-overview.png) | ![索引文件](docs/images/preview/索引文件-indexed-files.png) |
-| 🔢 文件数 | 🗃️ 归档内容 |
-| ![文件数](docs/images/preview/文件数-file-count.png) | ![归档内容](docs/images/preview/归档内容-archive.png) |
+### 📦 概览
+
+![概览](docs/images/preview/概览-overview.png)
+
+### 🗂️ 索引文件
+
+![索引文件](docs/images/preview/索引文件-indexed-files.png)
+
+### 🔢 文件数
+
+![文件数](docs/images/preview/文件数-file-count.png)
+
+### 🗃️ 归档内容
+
+![归档内容](docs/images/preview/归档内容-archive.png)
 
 ## 🚀 使用
 

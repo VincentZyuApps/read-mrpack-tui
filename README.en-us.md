@@ -15,11 +15,21 @@
 
 ## 🖼️ Preview
 
-| 📦 Overview | 🗂️ Indexed Files |
-| --- | --- |
-| ![Overview](docs/images/preview/概览-overview.png) | ![Indexed files](docs/images/preview/索引文件-indexed-files.png) |
-| 🔢 File Count | 🗃️ Archive Contents |
-| ![File count](docs/images/preview/文件数-file-count.png) | ![Archive contents](docs/images/preview/归档内容-archive.png) |
+### 📦 Overview
+
+![Overview](docs/images/preview/概览-overview.png)
+
+### 🗂️ Indexed Files
+
+![Indexed files](docs/images/preview/索引文件-indexed-files.png)
+
+### 🔢 File Count
+
+![File count](docs/images/preview/文件数-file-count.png)
+
+### 🗃️ Archive Contents
+
+![Archive contents](docs/images/preview/归档内容-archive.png)
 
 ## 🚀 Usage
 
