@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "read-mrpack-tui"
+version = "0.1.0"
+description = "📦 用于检查 Modrinth MRPACK 归档的 Textual 终端界面。A Textual terminal interface for inspecting Modrinth MRPACK archives. 🌳"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "VincentZyuApps" }]
+keywords = ["minecraft", "modrinth", "mrpack", "textual", "tui"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: End Users/Desktop",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Games/Entertainment",
+]
+dependencies = ["PyYAML>=6.0,<7", "textual>=8.2,<9"]
+
+[project.urls]
+Homepage = "https://github.com/VincentZyuApps/read-mrpack-tui"
+Source = "https://github.com/VincentZyuApps/read-mrpack-tui"
+Issues = "https://github.com/VincentZyuApps/read-mrpack-tui/issues"
+
+[project.scripts]
+read-mrpack-tui = "read_mrpack_tui.app:run"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/read_mrpack_tui"]
+include = ["src/read_mrpack_tui/locales/*.yml"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/read_mrpack_tui", "README.md", "README.zh-tw.md", "README.en-us.md", "LICENSE", "pyproject.toml"]

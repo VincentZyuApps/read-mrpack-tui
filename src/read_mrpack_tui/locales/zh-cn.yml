@@ -1,0 +1,65 @@
+app:
+  title: MRPACK 检查器
+  subtitle: Modrinth 整合包读取器
+tabs:
+  overview: 概览
+  indexed_files: 索引文件
+  archive: 归档内容
+  file_tree: 文件树
+actions:
+  load: 读取
+  clear: 清除
+  load_shortcut: 读取
+  filter_shortcut: 筛选
+  reload_shortcut: 重新读取
+  quit_shortcut: 退出
+input:
+  pack_path: 输入 .mrpack 文件的绝对路径
+  file_filter: 按路径、环境侧别或下载地址筛选
+status:
+  initial: 输入 MRPACK 路径以查看其元数据。
+  empty_path: 请输入 .mrpack 文件的绝对路径。
+  loaded: "已读取 {name} | {files} 个索引文件 | {entries} 个归档条目"
+sections:
+  dependencies: 依赖项
+columns:
+  dependency: 依赖项
+  version: 版本
+  path: 路径
+  side: 环境侧别
+  client: 客户端
+  server: 服务端
+  hash: 哈希
+  download: 下载地址
+  archive_root: 归档根目录
+  entries: 条目数
+  uncompressed_size: 未压缩大小
+summary:
+  no_pack: 尚未读取整合包。
+  title: "{name}"
+  metadata: "格式 {format_version}  |  游戏 {game}  |  归档 {archive_size}"
+  files: "索引文件：{total}  |  双端：{both}  |  仅客户端：{client_only}  |  仅服务端：{server_only}"
+group:
+  both: 双端
+  client_only: 仅客户端
+  server_only: 仅服务端
+  unsupported: 不支持
+environment:
+  required: 必需
+  optional: 可选
+  unsupported: 不支持
+archive:
+  root: （根目录）
+tree:
+  root: 归档文件
+errors:
+  file_not_found: "找不到文件：{path}"
+  not_mrpack: 请选择扩展名为 .mrpack 的文件。
+  missing_index: 此归档不包含 modrinth.index.json。
+  invalid_archive: 所选文件不是有效的 ZIP/MRPACK 归档。
+  invalid_json: modrinth.index.json 不是有效的 JSON。
+  read_failed: "无法读取归档：{detail}"
+cli:
+  description: 用于查看 Modrinth .mrpack 归档的交互式工具。
+  pack_help: .mrpack 归档的绝对路径。
+  language_help: 显示语言。默认值为 en-us。

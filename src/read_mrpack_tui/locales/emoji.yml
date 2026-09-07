@@ -1,0 +1,61 @@
+app:
+  title: "🔎"
+  subtitle: "🧭"
+tabs:
+  overview: "📋"
+  indexed_files: "🗂️"
+  archive: "📦"
+  file_tree: "🌳"
+actions:
+  load: "📂"
+  clear: "🧹"
+  load_shortcut: "📂"
+  filter_shortcut: "🔍"
+  reload_shortcut: "🔄"
+  quit_shortcut: "🚪"
+input:
+  pack_path: "📍"
+  file_filter: "🔍"
+status:
+  initial: "💡"
+  empty_path: "⚠️"
+  loaded: "✅"
+sections:
+  dependencies: "🔗"
+columns:
+  dependency: "🔗"
+  version: "🏷️"
+  path: "📄"
+  side: "↔️"
+  client: "🖥️"
+  server: "🗄️"
+  hash: "🔐"
+  download: "🌐"
+  archive_root: "🗂️"
+  entries: "🔢"
+  uncompressed_size: "📦"
+summary:
+  no_pack: "📭"
+  title: "📦"
+  metadata: "📝"
+  files: "📊"
+group:
+  both: "🔁"
+  client_only: "🖥️"
+  server_only: "🗄️"
+  unsupported: "🚫"
+environment:
+  required: "✅"
+  optional: "⚪"
+  unsupported: "🚫"
+archive:
+  root: "📁"
+tree:
+  root: "🌳"
+errors:
+  file_not_found: "❌"
+  not_mrpack: "❌"
+  missing_index: "❌"
+  invalid_archive: "❌"
+  invalid_json: "❌"
+  read_failed: "❌"

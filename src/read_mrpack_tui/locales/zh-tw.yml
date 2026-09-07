@@ -1,0 +1,65 @@
+app:
+  title: MRPACK 檢查器
+  subtitle: Modrinth 整合包讀取器
+tabs:
+  overview: 總覽
+  indexed_files: 索引檔案
+  archive: 封存內容
+  file_tree: 檔案樹
+actions:
+  load: 讀取
+  clear: 清除
+  load_shortcut: 讀取
+  filter_shortcut: 篩選
+  reload_shortcut: 重新讀取
+  quit_shortcut: 離開
+input:
+  pack_path: 輸入 .mrpack 檔案的絕對路徑
+  file_filter: 依路徑、環境側別或下載網址篩選
+status:
+  initial: 輸入 MRPACK 路徑以檢視其中繼資料。
+  empty_path: 請輸入 .mrpack 檔案的絕對路徑。
+  loaded: "已讀取 {name} | {files} 個索引檔案 | {entries} 個封存條目"
+sections:
+  dependencies: 相依項目
+columns:
+  dependency: 相依項目
+  version: 版本
+  path: 路徑
+  side: 環境側別
+  client: 用戶端
+  server: 伺服端
+  hash: 雜湊
+  download: 下載網址
+  archive_root: 封存根目錄
+  entries: 條目數
+  uncompressed_size: 未壓縮大小
+summary:
+  no_pack: 尚未讀取整合包。
+  title: "{name}"
+  metadata: "格式 {format_version}  |  遊戲 {game}  |  封存 {archive_size}"
+  files: "索引檔案：{total}  |  雙端：{both}  |  僅用戶端：{client_only}  |  僅伺服端：{server_only}"
+group:
+  both: 雙端
+  client_only: 僅用戶端
+  server_only: 僅伺服端
+  unsupported: 不支援
+environment:
+  required: 必要
+  optional: 選用
+  unsupported: 不支援
+archive:
+  root: （根目錄）
+tree:
+  root: 封存檔案
+errors:
+  file_not_found: "找不到檔案：{path}"
+  not_mrpack: 請選擇副檔名為 .mrpack 的檔案。
+  missing_index: 此封存不包含 modrinth.index.json。
+  invalid_archive: 所選檔案不是有效的 ZIP/MRPACK 封存。
+  invalid_json: modrinth.index.json 不是有效的 JSON。
+  read_failed: "無法讀取封存：{detail}"
+cli:
+  description: 用於檢視 Modrinth .mrpack 封存的互動式工具。
+  pack_help: .mrpack 封存的絕對路徑。
+  language_help: 顯示語言。預設值為 en-us。

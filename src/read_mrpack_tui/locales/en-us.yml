@@ -1,0 +1,65 @@
+app:
+  title: MRPACK Inspector
+  subtitle: Modrinth archive reader
+tabs:
+  overview: Overview
+  indexed_files: Indexed Files
+  archive: Archive
+  file_tree: File Tree
+actions:
+  load: Load
+  clear: Clear
+  load_shortcut: Load
+  filter_shortcut: Filter
+  reload_shortcut: Reload
+  quit_shortcut: Quit
+input:
+  pack_path: Absolute path to a .mrpack file
+  file_filter: Filter by path, side, or download URL
+status:
+  initial: Enter an MRPACK path to inspect its metadata.
+  empty_path: Enter an absolute .mrpack path.
+  loaded: "Loaded {name} | {files} indexed files | {entries} archive entries"
+sections:
+  dependencies: Dependencies
+columns:
+  dependency: Dependency
+  version: Version
+  path: Path
+  side: Side
+  client: Client
+  server: Server
+  hash: Hash
+  download: Download
+  archive_root: Archive root
+  entries: Entries
+  uncompressed_size: Uncompressed size
+summary:
+  no_pack: No pack loaded.
+  title: "{name}"
+  metadata: "Format {format_version}  |  Game {game}  |  Archive {archive_size}"
+  files: "Indexed files: {total}  |  Both: {both}  |  Client only: {client_only}  |  Server only: {server_only}"
+group:
+  both: Both
+  client_only: Client only
+  server_only: Server only
+  unsupported: Unsupported
+environment:
+  required: Required
+  optional: Optional
+  unsupported: Unsupported
+archive:
+  root: (root)
+tree:
+  root: Archive files
+errors:
+  file_not_found: "File not found: {path}"
+  not_mrpack: Select a file with the .mrpack extension.
+  missing_index: This archive does not contain modrinth.index.json.
+  invalid_archive: The selected file is not a valid ZIP/MRPACK archive.
+  invalid_json: modrinth.index.json is not valid JSON.
+  read_failed: "Unable to read the archive: {detail}"
+cli:
+  description: Interactive reader for Modrinth .mrpack archives.
+  pack_help: Absolute path to a .mrpack archive.
+  language_help: Display language. Defaults to en-us.
