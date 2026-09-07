@@ -13,24 +13,6 @@
 - 🔍 Filter indexed files by path, environment side, or download URL.
 - 🌐 Support Simplified Chinese, Traditional Chinese, and English.
 
-## 🖼️ Preview
-
-### 📦 Overview
-
-![Overview](docs/images/preview/概览-overview.png)
-
-### 🗂️ Indexed Files
-
-![Indexed files](docs/images/preview/索引文件-indexed-files.png)
-
-### 🌳 File Tree
-
-![File tree](docs/images/preview/文件树-file-tree.png)
-
-### 🗃️ Archive Contents
-
-![Archive contents](docs/images/preview/归档内容-archive.png)
-
 ## 🚀 Usage
 
 💡 Requirement: Python 3.11 or newer and [uv](https://docs.astral.sh/uv/).
@@ -57,3 +39,25 @@ uvx --refresh read-mrpack-tui --lang en-us "D:\Minecraft\modpacks\example.mrpack
 uv sync
 uv run read-mrpack-tui "D:\Minecraft\modpacks\example.mrpack"
 ```
+
+## 🖼️ Preview
+
+### 📦 Overview
+
+![Overview](docs/images/preview/概览-overview.png)
+
+### 🗂️ Indexed Files
+
+![Indexed files](docs/images/preview/索引文件-indexed-files.png)
+
+### 🌳 File Tree
+
+![File tree](docs/images/preview/文件树-file-tree.png)
+
+### 🗃️ Archive Contents
+
+![Archive contents](docs/images/preview/归档内容-archive.png)
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).

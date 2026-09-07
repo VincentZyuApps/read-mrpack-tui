@@ -13,24 +13,6 @@
 - 🔍 按路径、环境侧别或下载地址筛选索引文件。
 - 🌐 支持简体中文、繁体中文和英文。
 
-## 🖼️ 界面预览
-
-### 📦 概览
-
-![概览](docs/images/preview/概览-overview.png)
-
-### 🗂️ 索引文件
-
-![索引文件](docs/images/preview/索引文件-indexed-files.png)
-
-### 🌳 文件树
-
-![文件树](docs/images/preview/文件树-file-tree.png)
-
-### 🗃️ 归档内容
-
-![归档内容](docs/images/preview/归档内容-archive.png)
-
 ## 🚀 使用
 
 💡 环境要求：Python 3.11 或更高版本，以及 [uv](https://docs.astral.sh/uv/)。
@@ -57,3 +39,25 @@ uvx --refresh read-mrpack-tui --lang zh-cn "D:\Minecraft\modpacks\example.mrpack
 uv sync
 uv run read-mrpack-tui "D:\Minecraft\modpacks\example.mrpack"
 ```
+
+## 🖼️ 界面预览
+
+### 📦 概览
+
+![概览](docs/images/preview/概览-overview.png)
+
+### 🗂️ 索引文件
+
+![索引文件](docs/images/preview/索引文件-indexed-files.png)
+
+### 🌳 文件树
+
+![文件树](docs/images/preview/文件树-file-tree.png)
+
+### 🗃️ 归档内容
+
+![归档内容](docs/images/preview/归档内容-archive.png)
+
+## 📄 许可证
+
+本项目采用 [MIT License](LICENSE)。
