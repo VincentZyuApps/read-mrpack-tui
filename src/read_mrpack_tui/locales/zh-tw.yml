@@ -9,6 +9,8 @@ tabs:
 actions:
   load: 讀取
   clear: 清除
+  previous_match: 上一個相符項目
+  next_match: 下一個相符項目
   load_shortcut: 讀取
   filter_shortcut: 篩選
   reload_shortcut: 重新讀取

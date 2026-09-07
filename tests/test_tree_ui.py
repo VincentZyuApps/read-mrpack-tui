@@ -5,7 +5,7 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from textual.widgets import Input, Tree
+from textual.widgets import Button, Input, Tree
 
 from read_mrpack_tui.app import MrpackApp, read_pack
 from read_mrpack_tui.i18n import load_translator
@@ -36,6 +36,10 @@ class TreeUiTests(unittest.IsolatedAsyncioTestCase):
                 await pilot.press("s")
                 self.assertEqual(app._tree_match_index, 1)
                 await pilot.press("w")
+                self.assertEqual(app._tree_match_index, 0)
+                app.on_button_pressed(Button.Pressed(app.query_one("#next_tree_match", Button)))
+                self.assertEqual(app._tree_match_index, 1)
+                app.on_button_pressed(Button.Pressed(app.query_one("#previous_tree_match", Button)))
                 self.assertEqual(app._tree_match_index, 0)
 
 

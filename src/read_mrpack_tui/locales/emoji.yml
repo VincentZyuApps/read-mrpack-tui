@@ -9,6 +9,8 @@ tabs:
 actions:
   load: "📂"
   clear: "🧹"
+  previous_match: "⬆️"
+  next_match: "⬇️"
   load_shortcut: "📂"
   filter_shortcut: "🔍"
   reload_shortcut: "🔄"

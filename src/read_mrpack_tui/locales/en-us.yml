@@ -9,6 +9,8 @@ tabs:
 actions:
   load: Load
   clear: Clear
+  previous_match: Previous match
+  next_match: Next match
   load_shortcut: Load
   filter_shortcut: Filter
   reload_shortcut: Reload

@@ -138,6 +138,7 @@ class MrpackApp(App[None]):
     #file_tree { height: 1fr; padding: 1; }
     #filter_bar, #tree_filter_bar { height: auto; margin-bottom: 1; }
     #file_filter, #tree_filter { width: 1fr; }
+    #previous_tree_match, #next_tree_match { width: 5; min-width: 5; }
     #tree_search_status { width: auto; color: #84dca2; padding: 1 0 0 1; }
     .section_title { padding: 0 1; color: #1bd96a; text-style: bold; }
     Button { background: #1b3424; color: #dff7e6; border: tall #356345; }
@@ -197,6 +198,8 @@ class MrpackApp(App[None]):
                 with Horizontal(id="tree_filter_bar"):
                     yield Input(placeholder=self.ui("input.tree_filter"), id="tree_filter")
                     yield Button(self.ui("actions.clear"), id="clear_tree_filter")
+                    yield Button("↑", id="previous_tree_match", tooltip=self.ui("actions.previous_match"), disabled=True)
+                    yield Button("↓", id="next_tree_match", tooltip=self.ui("actions.next_match"), disabled=True)
                     yield Static("", id="tree_search_status")
                 yield SearchTree(self.ui("tree.root"), id="file_tree")
         yield Footer()
@@ -233,6 +236,10 @@ class MrpackApp(App[None]):
             self.query_one("#file_filter", Input).value = ""
         elif event.button.id == "clear_tree_filter":
             self.query_one("#tree_filter", Input).value = ""
+        elif event.button.id == "previous_tree_match":
+            self._move_tree_match(-1)
+        elif event.button.id == "next_tree_match":
+            self._move_tree_match(1)
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
         if event.input.id == "pack_path":
@@ -352,6 +359,7 @@ class MrpackApp(App[None]):
         tree.root.expand()
         self._tree_match_nodes = []
         self._tree_match_index = 0
+        self._set_tree_match_buttons(False)
         if not self.pack:
             return
 
@@ -394,6 +402,7 @@ class MrpackApp(App[None]):
         self._tree_match_nodes = [nodes[match.path] for match in result.matches if match.path in nodes]
         if not self._tree_match_nodes:
             return
+        self._set_tree_match_buttons(True)
         first_path = result.matches[0].path
         for index in range(1, len(first_path) + 1):
             path_key = first_path[:index]
@@ -416,6 +425,10 @@ class MrpackApp(App[None]):
             return
         self._tree_match_index = (self._tree_match_index + offset) % len(self._tree_match_nodes)
         self._focus_tree_match()
+
+    def _set_tree_match_buttons(self, enabled: bool) -> None:
+        self.query_one("#previous_tree_match", Button).disabled = not enabled
+        self.query_one("#next_tree_match", Button).disabled = not enabled
 
 def parse_arguments(argv: list[str]) -> tuple[argparse.Namespace, Translator]:
     bootstrap = argparse.ArgumentParser(add_help=False)
