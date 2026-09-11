@@ -3,6 +3,10 @@
 [![PyPI 包版本 / Package Version](https://img.shields.io/pypi/v/read-mrpack-tui?style=for-the-badge&logo=pypi&logoColor=white&label=Package%20Version&labelColor=3775A9&color=FFD43B)](https://pypi.org/project/read-mrpack-tui/)
 [![支援的 Python 版本 / Supported Python Versions](https://img.shields.io/pypi/pyversions/read-mrpack-tui?style=for-the-badge&logo=python&logoColor=white&labelColor=3775A9&color=FFD43B)](https://pypi.org/project/read-mrpack-tui/)
 
+> [![MRPACK 格式文档 / MRPACK Format Specification](https://img.shields.io/badge/Modrinth-1BD96A?style=for-the-badge&logo=modrinth&logoColor=white)](https://support.modrinth.com/en/articles/8802351-modrinth-modpack-format-mrpack)
+>
+> [点我查看 Modrinth 官网的 MRPACK 格式文档。](https://support.modrinth.com/en/articles/8802351-modrinth-modpack-format-mrpack)
+
 > 一個基於 Textual 的終端介面，用於讀取及瀏覽 Modrinth `.mrpack` 整合包。
 
 > **[📖 English](README.en-us.md)**
